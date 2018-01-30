@@ -15,7 +15,7 @@ class App extends Component {
   componentWillMount () {
     axios({
       method: 'GET',
-      url: 'http://18.219.12.175/user-service'
+      url: 'https://ms-github-external-4cddus3n7cti-2089727281.us-east-2.elb.amazonaws.com/user-service'
     })
           .then((response) => {
             console.log(response)
