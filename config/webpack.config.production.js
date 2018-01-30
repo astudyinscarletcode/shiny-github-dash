@@ -4,6 +4,7 @@ let webpack = require('webpack')
 let path = require('path')
 let config = require('./webpack.config.base.js')
 let cwd = __dirname || process.cwd()
+let UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 let DIST = path.join(cwd, '../build/')
 
@@ -13,7 +14,7 @@ config.output = {
 }
 
 config.plugins = config.plugins.concat([
-  new webpack.optimize.UglifyJsPlugin({
+  new UglifyJsPlugin({
     output: {
       comments: false
     },
