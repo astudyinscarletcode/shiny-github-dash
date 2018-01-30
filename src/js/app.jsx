@@ -16,8 +16,7 @@ class App extends Component {
     axios({
       method: 'GET',
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
+        'Access-Control-Allow-Origin': '*'
       },
       url: 'https://ms-github-external-4cddus3n7cti-2089727281.us-east-2.elb.amazonaws.com/user-service'
     })

@@ -6,6 +6,7 @@
 let express = require('express')
 let path = require('path')
 let favicon = require('serve-favicon')
+var sslRedirect = require('heroku-ssl-redirect')
 
 let app = express()
 
@@ -14,6 +15,9 @@ let cwd = __dirname || process.cwd()
 let staticPath = path.join(cwd, '/build')
 
 // Middlewares-------------------------------------------------------------------------------------------------------
+
+// Enable ssl redirect.
+app.use(sslRedirect())
 
 // Serve favicon.
 app.use(favicon(path.join(staticPath, '/assets/', 'favicon.ico')))
