@@ -15,12 +15,14 @@ config.output = {
 
 config.plugins = config.plugins.concat([
   new UglifyJsPlugin({
-    output: {
-      comments: false
-    },
-    compress: {
-      warnings: false,
-      screw_ie8: true
+    uglifyOptions: {
+      output: {
+        comments: false
+      },
+      compress: {
+        warnings: false,
+        screw_ie8: true
+      }
     }
   }),
   new webpack.DefinePlugin({
