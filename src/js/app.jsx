@@ -44,7 +44,7 @@ class App extends Component {
         </p>
         <p>
           Errors:
-          {this.state.errors}
+          {this.state.errors.summary}
         </p>
       </div>
     )
