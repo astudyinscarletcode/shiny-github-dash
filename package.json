@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "webpack",
-    "start": "webpack && node index.js"
+    "start": "npm install --dev && webpack && node index.js"
   },
   "main": "index.js",
   "author": "Molly Arhammar",
@@ -14,8 +14,7 @@
     "express": "^4.16.2",
     "react": "^15.5.4",
     "react-dom": "^15.4.2",
-    "serve-favicon": "^2.4.5",
-    "webpack": "2.4.1"
+    "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
     "axios-mock-adapter": "1.8.1",
