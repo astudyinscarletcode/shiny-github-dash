@@ -20,8 +20,7 @@ config.plugins = config.plugins.concat([
         comments: false
       },
       compress: {
-        warnings: false,
-        screw_ie8: true
+        warnings: false
       }
     }
   }),
