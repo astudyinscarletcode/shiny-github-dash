@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "webpack",
-    "start": "node index.js"
+    "start": "webpack && node index.js"
   },
   "main": "index.js",
   "author": "Molly Arhammar",
