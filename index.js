@@ -10,7 +10,7 @@ var sslRedirect = require('heroku-ssl-redirect')
 
 let app = express()
 
-let port = process.env.PORT || 8080
+let port = process.env.PORT || 5151
 let cwd = __dirname || process.cwd()
 let staticPath = path.join(cwd, '/build')
 
