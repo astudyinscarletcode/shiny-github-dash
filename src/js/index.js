@@ -19,8 +19,8 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import Auth from './modules/auth'
 import '../css/style.css'
 
-import UnauthorizedContainer from './containers/unauthorized/UnauthorizedContainer.jsx'
-import AuthorizedContainer from './containers/authorized/AuthorizedContainer.jsx'
+import UnauthorizedContainer from './pages/unauthorized/UnauthorizedContainer.jsx'
+import AuthorizedContainer from './pages/authorized/AuthorizedContainer.jsx'
 
 // Config -------------------------------------------------------------------------------------------------------------
 injectTapEventPlugin()
