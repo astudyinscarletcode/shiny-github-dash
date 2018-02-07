@@ -5,12 +5,7 @@
 // Imports ------------------------------------------------------------------------------------------------------------
 import React from 'react'
 import { Link, Route, Switch } from 'react-router-dom'
-
-import style from '../../ReactStyles'
-
-import Welcome from '../../components/unauthorized/Welcome.jsx'
 import LoginPage from './LoginPage.jsx'
-import About from '../../components/unauthorized/About.jsx'
 
 // Class --------------------------------------------------------------------------------------------------------------
 /**
@@ -25,7 +20,7 @@ const Container = ({ match }) => (
     </div>
     <div className='main-space-front'>
       <Switch>
-        <Route path='/login' render={(props) => (<LoginPage {...props} />)} />
+        <Route path='/' render={(props) => (<LoginPage {...props} />)} />
       </Switch>
     </div>
   </div>

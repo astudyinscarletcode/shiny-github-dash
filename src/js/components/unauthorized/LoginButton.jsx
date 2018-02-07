@@ -15,7 +15,6 @@ import Snackbar from 'material-ui/Snackbar'
  * Will display the error-state of the wrapper component.
  *
  * @param onSubmit {function} what to do when form is submitted.
- * @param onPopupConfirm {function} what to do when the popup is confirmed.
  * @param errors {Object} the error-state of the wrapper.
  * @param popup {Boolean} whether to display a popup.
  * @param popupAction {String} what action the popup button will have,
@@ -23,7 +22,6 @@ import Snackbar from 'material-ui/Snackbar'
  */
 const LoginForm = ({
     onSubmit,
-    onPopupConfirm,
     errors,
     popup,
     popupAction,
@@ -42,7 +40,6 @@ const LoginForm = ({
       open={popup}
       message={popupMessage}
       action={popupAction}
-      onActionTouchTap={onPopupConfirm}
     />
   </form>
 )

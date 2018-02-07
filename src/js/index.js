@@ -10,21 +10,18 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop.jsx'
-import injectTapEventPlugin from 'react-tap-event-plugin'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
 import Auth from './modules/auth'
-import '../css/style.css'
+import '../css/app.css'
 
 import UnauthorizedContainer from './pages/unauthorized/UnauthorizedContainer.jsx'
 import AuthorizedContainer from './pages/authorized/AuthorizedContainer.jsx'
 
 // Config -------------------------------------------------------------------------------------------------------------
-injectTapEventPlugin()
-
 const muiTheme = getMuiTheme(darkBaseTheme)
 
 // Class --------------------------------------------------------------------------------------------------------------
