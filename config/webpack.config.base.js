@@ -4,8 +4,8 @@ let CopyWebpackPlugin = require('copy-webpack-plugin')
 
 let cwd = __dirname || process.cwd()
 
-let DEV = path.join(cwd, '../src/')
-let DEBUG = path.join(cwd, '../build/')
+let DEV = path.join(cwd, '../client/src/')
+let DEBUG = path.join(cwd, '../client/build/')
 
 let config = {
   devtool: 'source-map',

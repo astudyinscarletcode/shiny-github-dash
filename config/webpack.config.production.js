@@ -6,7 +6,7 @@ let config = require('./webpack.config.base.js')
 let cwd = __dirname || process.cwd()
 let UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-let DIST = path.join(cwd, '../build/')
+let DIST = path.join(cwd, '../client/build/')
 
 config.output = {
   path: DIST,
