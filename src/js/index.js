@@ -8,37 +8,25 @@
 // Imports ------------------------------------------------------------------------------------------------------------
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import ScrollToTop from './components/ScrollToTop.jsx'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 
-import Auth from './modules/auth'
-import '../css/app.css'
-
-import UnauthorizedContainer from './pages/unauthorized/UnauthorizedContainer.jsx'
-import AuthorizedContainer from './pages/authorized/AuthorizedContainer.jsx'
+import App from './app.jsx'
 
 // Config -------------------------------------------------------------------------------------------------------------
 const muiTheme = getMuiTheme(darkBaseTheme)
 
-// Class --------------------------------------------------------------------------------------------------------------
-const App = () => (
+// Render -------------------------------------------------------------------------------------------------------------
+ReactDOM.render(
   <HashRouter >
     <MuiThemeProvider muiTheme={muiTheme}>
       <ScrollToTop>
-        <div>
-          <Switch>
-            <Route path='/dash' render={(props) => (Auth.isUserAuthenticated() ? (<AuthorizedContainer {...props} />) : (<UnauthorizedContainer />))} />
-            <Route path='/' render={() => (Auth.isUserAuthenticated() ? (<Redirect to={'dash'} />) : (<UnauthorizedContainer />))} />
-          </Switch>
-        </div>
+        <App />
       </ScrollToTop>
     </MuiThemeProvider>
-  </HashRouter>
-)
-
-// Render -------------------------------------------------------------------------------------------------------------
-ReactDOM.render(<App />, document.getElementById('root'))
+  </HashRouter>,
+document.getElementById('root'))

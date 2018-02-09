@@ -4,14 +4,19 @@
   "description": "",
   "scripts": {
     "build": "webpack",
-    "start": "npm install --only=dev && webpack && node index.js"
+    "start": "npm install --only=dev && webpack && node server/server.js"
   },
   "main": "index.js",
   "author": "Molly Arhammar",
   "license": "ISC",
   "dependencies": {
+    "auth0-js": "^9.2.2",
+    "dotenv": "^5.0.0",
     "express": "^4.16.2",
     "heroku-ssl-redirect": "0.0.4",
+    "jsonwebtoken": "^8.1.1",
+    "passport": "^0.4.0",
+    "passport-github": "^1.1.0",
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
@@ -35,7 +40,6 @@
     "react-dom": "^15.4.2",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
-    "react-tap-event-plugin": "^3.0.2",
     "style-loader": "0.16.1",
     "uglifyjs-webpack-plugin": "^1.1.8",
     "url-loader": "0.5.8",
