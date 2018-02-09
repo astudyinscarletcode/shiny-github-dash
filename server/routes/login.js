@@ -22,7 +22,7 @@ router.route('/login/return')
         if (err) {
           return next(err)
         } else {
-          return res.redirect('/?jwt=' + jwt.create({user: user.username}))
+          return res.redirect('/?jwt=' + jwt.create({user: user.username, accessToken: user.accessToken}))
         }
       })(req, res, next)
     })

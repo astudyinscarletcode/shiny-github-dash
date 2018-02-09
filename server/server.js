@@ -13,7 +13,7 @@ let app = express()
 let login = require('./routes/login')
 let port = process.env.PORT || 5151
 let cwd = __dirname || process.cwd()
-let staticPath = path.join(cwd, '../build')
+let staticPath = path.join(cwd, '../client/build')
 
 require('dotenv').config({path: path.join(cwd + '/.env')})
 require('./lib/auth/passport-setup').connect()
