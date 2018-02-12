@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.1.1",
     "passport": "^0.4.0",
     "passport-github": "^1.1.0",
+    "react-websocket": "^2.0.0",
     "serve-favicon": "^2.4.5"
   },
   "devDependencies": {
