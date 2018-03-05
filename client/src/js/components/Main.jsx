@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Home from './Home.jsx'
-import Dash from './Dash.jsx'
-import Settings from './Settings.jsx'
 import OrganizationPicker from './OrganizationPicker.jsx'
 
 import Auth from '../modules/auth'

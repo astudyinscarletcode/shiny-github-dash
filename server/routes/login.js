@@ -4,7 +4,7 @@
 
 // Requires.
 let router = require('express').Router()
-let jwt = require('../lib/auth/jwt')
+let axios = require('axios')
 let passport = require('passport')
 
 /**
@@ -22,7 +22,18 @@ router.route('/login/return')
         if (err) {
           return next(err)
         } else {
-          return res.redirect('/?jwt=' + jwt.create({user: user.username, accessToken: user.accessToken}))
+          axios({
+            url: (process.env.GITHUB_APP_GATEWAY_URL + '/github/authorize'),
+            method: 'POST',
+            data: {user: user.username, accessToken: user.accessToken}
+          })
+          .then((result) => {
+            return res.redirect('/?jwt=' + result.data)
+          })
+          .catch((err) => {
+            console.log(err)
+            return res.sendStatus(500)
+          })
         }
       })(req, res, next)
     })

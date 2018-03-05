@@ -26,23 +26,19 @@ class OrganizationPicker extends Component {
 
   componentDidMount () {
     axios({
-      method: 'put',
+      method: 'get',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-      url: 'http://127.0.0.1:5252/github/user'
+      url: 'http://127.0.0.1:5050/github/organizations'
     })
     .then((response) => {
-      console.log('response')
-      console.log(response.data)
       this.setState({menuOptions: response.data.map(org => org.login)})
     })
     .catch((err) => {
-      console.log('error')
       console.log({message: err})
     })
   }
 
   handleToggle () {
-    console.log(this.state)
     this.setState({open: !this.state.open})
   }
 
@@ -59,7 +55,7 @@ class OrganizationPicker extends Component {
             onClick={this.handleToggle}
         />
           <Drawer open={this.state.open}>
-            {(this.state.menuOptions.length === 0) && <p>You are not following any organizations</p> }
+            {(this.state.menuOptions.length === 0) && <p>You are not the admin of any organizations</p> }
 
             {(this.state.menuOptions.length > 0) && (
             <div>
