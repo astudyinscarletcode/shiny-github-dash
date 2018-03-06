@@ -14,7 +14,7 @@ class Websocket extends React.Component {
     let newSocket = {
       name: this.props.organization,
       socket: socket(this.props.url, {
-        query: 'organization=' + this.props.organization,
+        query: 'organization=' + this.props.organization + '&id=' + this.props.auth,
         transportOptions: {
           polling: {
             extraHeaders: {
@@ -24,6 +24,10 @@ class Websocket extends React.Component {
         }
       })
     }
+
+    console.log('fala')
+    newSocket.socket.on('event', (data) => { console.log(data) })
+
     this.setState(prevState => ({
       sockets: [...prevState.sockets, newSocket]
     }))
@@ -34,7 +38,7 @@ class Websocket extends React.Component {
       let newSocket = {
         name: nextProps.organization,
         socket: socket(this.props.url, {
-          query: 'organization=' + nextProps.organization,
+          query: 'organization=' + nextProps.organization + '&id=' + this.props.auth,
           transportOptions: {
             polling: {
               extraHeaders: {
@@ -44,6 +48,10 @@ class Websocket extends React.Component {
           }
         })
       }
+
+      console.log('fala')
+      newSocket.socket.on('event', (data) => { console.log(data) })
+
       this.setState(prevState => ({
         sockets: [...prevState.sockets, newSocket]
       }))
