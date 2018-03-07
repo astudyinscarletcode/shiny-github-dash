@@ -31,7 +31,7 @@ class OrganizationPicker extends Component {
       url: 'http://127.0.0.1:5050/github/organizations'
     })
     .then((response) => {
-      this.setState({menuOptions: response.data.map(org => org.login)})
+      this.setState({menuOptions: response.data.map(org => org.login), selected: (response.data[0].login ? response.data[0].login : 0)})
     })
     .catch((err) => {
       console.log({message: err})
@@ -60,7 +60,7 @@ class OrganizationPicker extends Component {
             {(this.state.menuOptions.length > 0) && (
             <div>
                 {this.state.menuOptions.map((option) => (
-                  <MenuItem key={this.state.menuOptions.indexOf(option)} onClick={() => this.handleSelect(this.state.menuOptions.indexOf(option))}>{option}</MenuItem>
+                  <MenuItem key={this.state.menuOptions.indexOf(option)} onClick={() => this.handleSelect(option)}>{option}</MenuItem>
                 ))}
             </div>
             )}
