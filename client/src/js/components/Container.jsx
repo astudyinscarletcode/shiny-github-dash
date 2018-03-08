@@ -56,7 +56,7 @@ class Container extends Component {
         messages: {
           [this.state.selected]: [...prevState.messages[this.state.selected], message]
         }
-      }), () => {console.log(this.state)})
+      }))
     }
   }
 
@@ -89,7 +89,7 @@ class Container extends Component {
           </Switch>
         </div>
       </div>)
-      : <CircularProgress />
+      : <div className='wait'><CircularProgress /></div>
     )
   }
 }

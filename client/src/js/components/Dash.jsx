@@ -4,18 +4,12 @@ import Websocket from './WebSocket.jsx'
 import Auth from '../modules/auth'
 
 class Dash extends Component {
-  constructor (props) {
-    super(props)
-    console.log(this.props.messages.length)
-  }
-
   render () {
     return (
       <div>
-        <h2>This is a dash page!</h2>
-        {(this.props.name === 0) && (<p>You are not the admin of any organizations</p>) }
-        {(this.props.name !== 0) && (<p>{this.props.name}</p>)}
-        {(this.props.messages.length > 0) && (this.props.messages.map((event) => { return (<div><p>{event.time}</p><p>{event.user} did a {event.type} in {event.repo}</p></div>) }))}
+        {(this.props.name === 0) && (<h2>You are not the admin of any organizations</h2>) }
+        {(this.props.name !== 0) && (<h2>Dash of {this.props.name}</h2>)}
+        {(this.props.messages.length > 0) && (this.props.messages.reverse().map((event, index) => { return (<div className='event' key={index}><p className='time'>{event.time}</p><p><span className='user'>{event.user}</span> did a <span className='type'>{event.type}</span> in <span className='repo'>{event.repo}</span></p></div>) }))}
         <Websocket
           url='ws://127.0.0.1:5050'
           auth={Auth.getToken()}

@@ -22,3 +22,27 @@ body {
 .main-space-front {
   font-size: large;
 }
+
+.wait {
+  margin-top: 5em;
+}
+
+.event {
+  border-bottom-style: dashed;
+  border-bottom-width: 0.1em;
+  max-width: 20em;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.event .time {
+  font-size: 0.5em;
+  font-style: italic;
+  text-align: right;
+}
+
+.event .user, .event .type, .event .repo {
+  font-size: 1em;
+  font-weight: bolder;
+  text-align: left;
+}
