@@ -83,7 +83,7 @@ class Container extends Component {
         </div>
         <div>
           <Switch>
-            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state[this.state.selected] ? this.state[this.state.selected].messages : []} />)} />
+            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state.messages[this.state.selected] ? this.state.messages[this.state.selected] : []} />)} />
             <Route path='/settings' render={(props) => (<Settings name={this.state.selected} />)} />
             <Route path={`${this.props.match.path}/logout`} render={() => (Auth.deauthenticateUser() ? (<Redirect to={'/'} />) : (<Redirect to={'dash'} />))} />
           </Switch>
