@@ -66,7 +66,7 @@ class Container extends Component {
         <div className='navigation-bar'>
           <Link id='main-link' to='/'><img src='/assets/favicon.ico' /></Link>
           <div className='sub-nav'>
-            <Link className='link' id='logout-link' to='/logout'>Log out</Link>
+            <Link className='link' id='logout-link' to='/logout'>Logout</Link>
             <Link className='link' id='settings-link' to='/settings'>Settings</Link>
             <Link className='link' id='dash-link' to='/dash'>Dash</Link>
           </div>

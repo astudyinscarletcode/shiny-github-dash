@@ -7,7 +7,7 @@ class App extends Component {
     return (
       <div className='App'>
         <header className='App-header'>
-          <h1 className='App-title'>Welcome to your Github Dash</h1>
+          <h1 className='App-title'>Github Dash</h1>
         </header>
         <div className='App-intro'>
           <Main />
