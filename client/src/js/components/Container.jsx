@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
+import CircularProgress from 'material-ui/CircularProgress'
 import axios from 'axios'
 
 import Dash from './Dash.jsx'
@@ -11,17 +12,17 @@ import Settings from './Settings.jsx'
 
 import Auth from '../modules/auth'
 
-class OrganizationPicker extends Component {
+class Container extends Component {
   constructor (props) {
     super(props)
     this.state = {
       open: false,
-      menuOptions: [],
-      selected: 0
+      menuOptions: []
     }
 
     this.handleToggle = this.handleToggle.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
+    this.handleMessages = this.handleMessages.bind(this)
   }
 
   componentDidMount () {
@@ -31,7 +32,7 @@ class OrganizationPicker extends Component {
       url: 'http://127.0.0.1:5050/github/organizations'
     })
     .then((response) => {
-      this.setState({menuOptions: response.data.map(org => org.login), selected: (response.data[0].login ? response.data[0].login : 0)})
+      this.setState({menuOptions: response.data.organizations.map(org => org.login), selected: (response.data.organizations[0].login ? response.data.organizations[0].login : 0)})
     })
     .catch((err) => {
       console.log({message: err})
@@ -46,9 +47,19 @@ class OrganizationPicker extends Component {
     this.setState({selected: key})
   }
 
+  handleMessage (message) {
+    console.log(message)
+    this.state[this.state.selected]
+    ? this.setState(prevState => ({
+      [[this.state.selected]['messages']]: [...prevState[[this.state.selected]['messages']], message]
+    }))
+    : this.setState({[this.state.selected]: [message]})
+  }
+
   render () {
     return (
-      <div>
+      this.state.selected
+      ? (<div>
         <div>
           <RaisedButton
             label='Select Organization'
@@ -68,14 +79,15 @@ class OrganizationPicker extends Component {
         </div>
         <div>
           <Switch>
-            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} />)} />
+            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state[this.state.selected].messages} />)} />
             <Route path='/settings' render={(props) => (<Settings name={this.state.selected} />)} />
             <Route path={`${this.props.match.path}/logout`} render={() => (Auth.deauthenticateUser() ? (<Redirect to={'/'} />) : (<Redirect to={'dash'} />))} />
           </Switch>
         </div>
-      </div>
+      </div>)
+      : <CircularProgress />
     )
   }
 }
 
-export default OrganizationPicker
+export default Container

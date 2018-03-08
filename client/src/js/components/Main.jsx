@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Home from './Home.jsx'
-import OrganizationPicker from './OrganizationPicker.jsx'
+import Container from './Container.jsx'
 
 import Auth from '../modules/auth'
 
@@ -20,8 +20,8 @@ class Main extends Component {
     return (
       <div>
         <Switch>
-          <Route path='/dash' render={(props) => (Auth.isUserAuthenticated() ? (<OrganizationPicker {...props} />) : (<Redirect to={''} />))} />
-          <Route path='/settings' render={(props) => (Auth.isUserAuthenticated() ? (<OrganizationPicker {...props} />) : (<Redirect to={''} />))} />
+          <Route path='/dash' render={(props) => (Auth.isUserAuthenticated() ? (<Container {...props} />) : (<Redirect to={''} />))} />
+          <Route path='/settings' render={(props) => (Auth.isUserAuthenticated() ? (<Container {...props} />) : (<Redirect to={''} />))} />
           <Route exact path='/' render={() => (Auth.isUserAuthenticated() ? (<Redirect to={'dash'} />) : (<Home />))} />
         </Switch>
       </div>
