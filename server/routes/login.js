@@ -28,7 +28,7 @@ router.route('/login/return')
             data: {user: user.username, accessToken: user.accessToken}
           })
           .then((result) => {
-            return res.redirect('/?jwt=' + result.data)
+            return res.redirect('/?jwt=' + result.data.token)
           })
           .catch((err) => {
             console.log(err)

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
 
 import Home from './Home.jsx'
 import Container from './Container.jsx'
@@ -22,6 +22,7 @@ class Main extends Component {
         <Switch>
           <Route path='/dash' render={(props) => (Auth.isUserAuthenticated() ? (<Container {...props} />) : (<Redirect to={''} />))} />
           <Route path='/settings' render={(props) => (Auth.isUserAuthenticated() ? (<Container {...props} />) : (<Redirect to={''} />))} />
+          <Route path='/logout' render={() => (Auth.deauthenticateUser() ? (<Redirect to={'/'} />) : (<Redirect to={'dash'} />))} />
           <Route exact path='/' render={() => (Auth.isUserAuthenticated() ? (<Redirect to={'dash'} />) : (<Home />))} />
         </Switch>
       </div>

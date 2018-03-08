@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Link } from 'react-router-dom'
 
 import Drawer from 'material-ui/Drawer'
 import MenuItem from 'material-ui/MenuItem'
@@ -62,34 +62,42 @@ class Container extends Component {
 
   render () {
     return (
-      this.state.selected
-      ? (<div>
-        <div>
-          <RaisedButton
-            label='Select Organization'
-            onClick={this.handleToggle}
+      <div>
+        <div className='navigation-bar'>
+          <Link id='main-link' to='/'><img src='/assets/favicon.ico' /></Link>
+          <div className='sub-nav'>
+            <Link className='link' id='logout-link' to='/logout'>Log out</Link>
+            <Link className='link' id='settings-link' to='/settings'>Settings</Link>
+            <Link className='link' id='dash-link' to='/dash'>Dash</Link>
+          </div>
+        </div>
+        {(this.state.selected) && (<div>
+          <div>
+            <RaisedButton
+              label='Select Organization'
+              onClick={this.handleToggle}
         />
-          <Drawer open={this.state.open}>
-            {(this.state.menuOptions.length === 0) && <p>You are not the admin of any organizations</p> }
+            <Drawer open={this.state.open}>
+              {(this.state.menuOptions.length === 0) && <p>You are not the admin of any organizations</p> }
 
-            {(this.state.menuOptions.length > 0) && (
-            <div>
+              {(this.state.menuOptions.length > 0) && (
+              <div>
                 {this.state.menuOptions.map((option) => (
                   <MenuItem key={this.state.menuOptions.indexOf(option)} onClick={() => this.handleSelect(option)}>{option}</MenuItem>
                 ))}
-            </div>
+              </div>
             )}
-          </Drawer>
-        </div>
-        <div>
-          <Switch>
-            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state.messages[this.state.selected] ? this.state.messages[this.state.selected] : []} />)} />
-            <Route path='/settings' render={(props) => (<Settings name={this.state.selected} />)} />
-            <Route path={`${this.props.match.path}/logout`} render={() => (Auth.deauthenticateUser() ? (<Redirect to={'/'} />) : (<Redirect to={'dash'} />))} />
-          </Switch>
-        </div>
-      </div>)
-      : <div className='wait'><CircularProgress /></div>
+            </Drawer>
+          </div>
+          <div>
+            <Switch>
+              <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state.messages[this.state.selected] ? this.state.messages[this.state.selected] : []} />)} />
+              <Route path='/settings' render={(props) => (<Settings name={this.state.selected} />)} />
+            </Switch>
+          </div>
+        </div>)}
+        {(!this.state.selected) && (<div className='wait'><CircularProgress /></div>)}
+      </div>
     )
   }
 }

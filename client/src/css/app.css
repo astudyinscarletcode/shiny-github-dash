@@ -23,6 +23,26 @@ body {
   font-size: large;
 }
 
+.navigation-bar {
+  background-color: #222;
+  padding: 2em;
+}
+
+.main-link {
+  margin: -5em;
+}
+
+.sub-nav {
+  display: block;
+  padding: 2em;
+}
+
+.link {
+  padding: 2em;
+  color: white;
+  text-decoration-style: none
+}
+
 .wait {
   margin-top: 5em;
 }
