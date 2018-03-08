@@ -59,7 +59,7 @@ class Container extends Component {
       console.log('prev')
 
       this.setState({
-        [[this.state.selected]['messages']]: this.state[this.state.selected]['messages'].concat([message])
+        [[this.state.selected].messages]: this.state[this.state.selected]['messages'].concat([message])
       }, () => {console.log(this.state)})
     }
   }
