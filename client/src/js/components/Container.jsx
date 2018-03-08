@@ -56,7 +56,7 @@ class Container extends Component {
         messages: {
           [this.state.selected]: [...prevState.messages[this.state.selected], message]
         }
-      }))
+      }), () => {console.log(this.state)})
     }
   }
 
