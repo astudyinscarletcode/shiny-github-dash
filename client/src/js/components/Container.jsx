@@ -22,7 +22,7 @@ class Container extends Component {
 
     this.handleToggle = this.handleToggle.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
-    this.handleMessages = this.handleMessages.bind(this)
+    this.handleMessage = this.handleMessage.bind(this)
   }
 
   componentDidMount () {
@@ -36,6 +36,7 @@ class Container extends Component {
     })
     .catch((err) => {
       console.log({message: err})
+      console.log(err)
     })
   }
 
@@ -49,11 +50,17 @@ class Container extends Component {
 
   handleMessage (message) {
     console.log(message)
-    this.state[this.state.selected]
-    ? this.setState(prevState => ({
-      [[this.state.selected]['messages']]: [...prevState[[this.state.selected]['messages']], message]
-    }))
-    : this.setState({[this.state.selected]: [message]})
+    console.log(this.state[this.state.selected])
+
+    if (!this.state[this.state.selected]) {
+      console.log('no prev')
+      this.setState({[this.state.selected]: {'messages': [message]}}, () => {console.log(this.state)})
+    } else {
+      console.log('prev')
+      this.setState(prevState => ({
+        [[this.state.selected]['messages']]: [...prevState[[this.state.selected]['messages']], message]
+      }), () => {console.log(this.state)})
+    }
   }
 
   render () {
@@ -79,7 +86,7 @@ class Container extends Component {
         </div>
         <div>
           <Switch>
-            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state[this.state.selected].messages} />)} />
+            <Route path='/dash' render={(props) => (<Dash name={this.state.selected} onEvent={this.handleMessage} messages={this.state[this.state.selected] ? this.state[this.state.selected].messages : []} />)} />
             <Route path='/settings' render={(props) => (<Settings name={this.state.selected} />)} />
             <Route path={`${this.props.match.path}/logout`} render={() => (Auth.deauthenticateUser() ? (<Redirect to={'/'} />) : (<Redirect to={'dash'} />))} />
           </Switch>

@@ -37,7 +37,7 @@ class Websocket extends React.Component {
       })
     }
 
-    newSocket.socket.on('event', this.props.onMessage)
+    newSocket.socket.on('event', this.props.onEvent)
 
     this.setState(prevState => ({
       sockets: [...prevState.sockets, newSocket]
