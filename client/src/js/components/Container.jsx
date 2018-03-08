@@ -52,13 +52,11 @@ class Container extends Component {
     if (!this.state['messages'][this.state.selected]) {
       this.setState({messages: {[this.state.selected]: [message]}})
     } else {
-      this.setState({
-        ...this.state,
+      this.setState(prevState => ({
         messages: {
-          ...this.state.messages,
-          [this.state.selected]: message
+          [this.state.selected]: [...prevState.messages[this.state.selected], message]
         }
-      })
+      }))
     }
   }
 
