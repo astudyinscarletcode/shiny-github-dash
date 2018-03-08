@@ -17,7 +17,8 @@ class Container extends Component {
     super(props)
     this.state = {
       open: false,
-      menuOptions: []
+      menuOptions: [],
+      messages: {}
     }
 
     this.handleToggle = this.handleToggle.bind(this)
@@ -36,7 +37,6 @@ class Container extends Component {
     })
     .catch((err) => {
       console.log({message: err})
-      console.log(err)
     })
   }
 
@@ -49,18 +49,12 @@ class Container extends Component {
   }
 
   handleMessage (message) {
-    console.log(message)
-    console.log(this.state[this.state.selected])
-
-    if (!this.state[this.state.selected]) {
-      console.log('no prev')
-      this.setState({[this.state.selected]: {'messages': [message]}}, () => {console.log(this.state)})
+    if (!this.state['messages'][this.state.selected]) {
+      this.setState({messages: {[this.state.selected]: [message]}})
     } else {
-      console.log('prev')
-
       this.setState({
-        [this.state.selected]: {messages: this.state[this.state.selected]['messages'].concat([message])}
-      }, () => {console.log(this.state)})
+        ['messages[' + [this.state.selected] + ']']: {messages: this.state['messages'][this.state.selected].concat([message])}
+      })
     }
   }
 
