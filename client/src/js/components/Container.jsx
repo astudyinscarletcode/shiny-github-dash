@@ -54,7 +54,7 @@ class Container extends Component {
     } else {
       this.setState({
         ['messages[' + [this.state.selected] + ']']: {messages: this.state['messages'][this.state.selected].concat([message])}
-      })
+      }, () => {console.log(this.state)})
     }
   }
 
