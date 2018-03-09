@@ -3,6 +3,8 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ActivateNotification from 'material-ui/svg-icons/alert/add-alert'
 import UnActivateNotification from 'material-ui/svg-icons/navigation/cancel'
 import Notifications from './../modules/notifications'
+import Auth from '../modules/auth'
+import axios from 'axios'
 
 class Settings extends Component {
   constructor (props) {
@@ -24,7 +26,7 @@ class Settings extends Component {
         this.setState({pushError: result.message})
       }
 
-      return Notifications.checkPushPermisson()
+      return Notifications.checkPushPermission()
     })
     .then((result) => {
       if (!result.success) {
@@ -49,6 +51,9 @@ class Settings extends Component {
     console.log('clickety')
     if (this.state.pushEnabled) {
       Notifications.unsubscribePush()
+      .then((subscriptionID) => {
+        return this.removeSubscriptionID(subscriptionID)
+      })
       .then((result) => {
         this.setState({pushEnabled: false})
       })
@@ -59,7 +64,10 @@ class Settings extends Component {
       })
     } else {
       Notifications.subscribePush()
-      .then((result) => {
+      .then((subscriptionID) => {
+        return this.addSubscriptionID(subscriptionID)
+      })
+      .then(() => {
         this.setState({pushEnabled: true})
       })
       .catch((error) => {
@@ -68,6 +76,23 @@ class Settings extends Component {
         this.setState({pushError: error.message})
       })
     }
+  }
+
+  addSubscriptionID (id) {
+    axios({
+      url: 'http://127.0.0.1:5050/notifications/subscriptions/' + id,
+      method: 'PUT',
+      headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      data: {id: id}
+    })
+  }
+
+  removeSubscriptionID (id) {
+    axios({
+      url: 'http://127.0.0.1:5050/notifications/subscriptions/' + id,
+      method: 'DELETE',
+      headers: {'Authorization': 'Bearer ' + Auth.getToken()}
+    })
   }
 
   render () {

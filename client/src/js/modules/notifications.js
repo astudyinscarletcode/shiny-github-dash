@@ -74,8 +74,9 @@ class Notifications {
       .then((subscription) => {
         console.info('Push notification subscribed.')
         console.log(subscription)
-        resolve()
-        // saveSubscriptionID(subscription);
+        let subscriptionID = subscription.endpoint.split('gcm/send/')[1]
+        resolve(subscriptionID)
+        Notifications.saveSubscriptionID(subscription)
       })
       .catch((error) => {
         reject({message: 'Push notification subscription error: ' + error.message})
@@ -93,17 +94,17 @@ class Notifications {
         return registration.pushManager.getSubscription()
       })
       .then((subscription) => {
-        if(!subscription) {
+        if (!subscription) {
           reject({message: 'Unable to unregister push notification.'})
         }
 
-        return subscription.unsubscribe()
+        return Promise.all([Promise.resolve(subscription), subscription.unsubscribe()])
       })
       .then((subscription) => {
         console.info('Push notification unsubscribed.')
-        console.log(subscription)
-        //deleteSubscriptionID(subscription)
-        resolve()
+        console.log(subscription[0])
+        let subscriptionID = subscription[0].endpoint.split('gcm/send/')[1]
+        resolve(subscriptionID)
       })
       .catch((error) => {
         reject({message: error.message || 'Failed to unsubscribe push notification.'})

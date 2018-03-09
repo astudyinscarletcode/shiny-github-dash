@@ -56,6 +56,18 @@ self.addEventListener('fetch', (event) => {
               .catch(() => fetch(request)))
   }
 
+  /**
+   * Listen for push-notifications.
+   */
+  self.addEventListener('push', (event) => {
+    console.info('Event: Push')
+    let title = event.data.title || 'Event'
+    let body = event.data.body
+    event.waitUntil(
+      self.registration.showNotification(title, body)
+    )
+  })
+
   // Add responses to cache to fetch later.
   function addToCache (cacheKey, request, response) {
     if (response.ok) {
@@ -97,6 +109,7 @@ self.addEventListener('fetch', (event) => {
 
   // Use cache first if GET request.
   if (isCacheable(event.request)) {
+    console.log('using cache')
     onFetch(event)
   }
 
@@ -105,9 +118,16 @@ self.addEventListener('fetch', (event) => {
     let parsedURL = new URL(request.url)
 
     let isGithub = parsedURL.origin.includes('github')
+    let isLogin = parsedURL.pathname.includes('login')
     let isSocket = parsedURL.pathname.includes('socket.io')
     let isGET = request.method === 'GET'
 
-    return ((!(isGithub || isSocket)) && isGET)
+    console.log('URL:' + request.url)
+    console.log('Is github: ' + isGithub)
+    console.log('Is login: ' + isLogin)
+    console.log('Is socket: ' + isSocket)
+    console.log('Is GET: ' + isGET)
+
+    return ((!(isGithub || isSocket || isLogin)) && isGET)
   }
 })
