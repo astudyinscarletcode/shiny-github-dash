@@ -82,8 +82,7 @@ class Settings extends Component {
     axios({
       url: 'http://127.0.0.1:5050/notifications/subscriptions/' + id,
       method: 'PUT',
-      headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-      data: {id: id}
+      headers: {'Authorization': 'Bearer ' + Auth.getToken()}
     })
   }
 

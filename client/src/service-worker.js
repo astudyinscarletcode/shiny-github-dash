@@ -62,7 +62,10 @@ self.addEventListener('fetch', (event) => {
   self.addEventListener('push', (event) => {
     console.info('Event: Push')
     let title = event.data.title || 'Event'
-    let body = event.data.body
+    let body = {
+      body: event.data.body,
+      tag: 'shiny'
+    }
     event.waitUntil(
       self.registration.showNotification(title, body)
     )
@@ -109,7 +112,6 @@ self.addEventListener('fetch', (event) => {
 
   // Use cache first if GET request.
   if (isCacheable(event.request)) {
-    console.log('using cache')
     onFetch(event)
   }
 
@@ -121,12 +123,6 @@ self.addEventListener('fetch', (event) => {
     let isLogin = parsedURL.pathname.includes('login')
     let isSocket = parsedURL.pathname.includes('socket.io')
     let isGET = request.method === 'GET'
-
-    console.log('URL:' + request.url)
-    console.log('Is github: ' + isGithub)
-    console.log('Is login: ' + isLogin)
-    console.log('Is socket: ' + isSocket)
-    console.log('Is GET: ' + isGET)
 
     return ((!(isGithub || isSocket || isLogin)) && isGET)
   }
