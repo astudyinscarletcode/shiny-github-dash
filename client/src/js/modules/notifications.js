@@ -73,10 +73,9 @@ class Notifications {
       })
       .then((subscription) => {
         console.info('Push notification subscribed.')
-        console.log(subscription)
-        let subscriptionID = subscription.endpoint
-        resolve(subscriptionID)
-        Notifications.saveSubscriptionID(subscription)
+
+        resolve(JSON.stringify(subscription))
+
       })
       .catch((error) => {
         reject({message: 'Push notification subscription error: ' + error.message})
@@ -102,9 +101,8 @@ class Notifications {
       })
       .then((subscription) => {
         console.info('Push notification unsubscribed.')
-        console.log(subscription[0])
-        let subscriptionID = subscription[0].endpoint
-        resolve(subscriptionID)
+
+        resolve(JSON.stringify(subscription[0]))
       })
       .catch((error) => {
         reject({message: error.message || 'Failed to unsubscribe push notification.'})
