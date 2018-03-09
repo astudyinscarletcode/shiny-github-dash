@@ -78,24 +78,24 @@ class Settings extends Component {
     }
   }
 
-  addSubscriptionID (id) {
+  addSubscriptionID (endpoint) {
     axios({
       url: 'http://127.0.0.1:5050/notifications/subscriptions/',
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       data: {
-        endpoint: id
+        endpoint: endpoint
       }
     })
   }
 
-  removeSubscriptionID (id) {
+  removeSubscriptionID (endpoint) {
     axios({
       url: 'http://127.0.0.1:5050/notifications/subscriptions/',
       method: 'DELETE',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       data: {
-        endpoint: id
+        endpoint: endpoint
       }
     })
   }
