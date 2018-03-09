@@ -37,6 +37,21 @@ self.addEventListener('activate', (event) => {
   )
 })
 
+ /**
+   * Listen for push-notifications.
+   */
+  self.addEventListener('push', (event) => {
+    console.info('Event: Push')
+    let title = event.data.title || 'Event'
+    let body = {
+      body: event.data.body,
+      tag: 'shiny'
+    }
+    event.waitUntil(
+      self.registration.showNotification(title, body)
+    )
+  })
+
 // Handle fetch events by first asking the network, then sending back the cached resource if available.
 self.addEventListener('fetch', (event) => {
   function onFetch (event) {
@@ -55,21 +70,6 @@ self.addEventListener('fetch', (event) => {
               .catch(() => fetchFromCache(event))
               .catch(() => fetch(request)))
   }
-
-  /**
-   * Listen for push-notifications.
-   */
-  self.addEventListener('push', (event) => {
-    console.info('Event: Push')
-    let title = event.data.title || 'Event'
-    let body = {
-      body: event.data.body,
-      tag: 'shiny'
-    }
-    event.waitUntil(
-      self.registration.showNotification(title, body)
-    )
-  })
 
   // Add responses to cache to fetch later.
   function addToCache (cacheKey, request, response) {
