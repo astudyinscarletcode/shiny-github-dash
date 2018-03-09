@@ -42,6 +42,8 @@ self.addEventListener('activate', (event) => {
    */
   self.addEventListener('push', (event) => {
     console.info('Event: Push')
+    console.info(event)
+    console.log(event)
     let payload = event.data ? event.data.text() : 'no payload'
     event.waitUntil(
       self.registration.showNotification('Shiny Github Dash', {

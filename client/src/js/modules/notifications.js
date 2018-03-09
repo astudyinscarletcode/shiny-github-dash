@@ -74,7 +74,7 @@ class Notifications {
       .then((subscription) => {
         console.info('Push notification subscribed.')
         console.log(subscription)
-        let subscriptionID = subscription.endpoint.split('gcm/send/')[1]
+        let subscriptionID = subscription.endpoint
         resolve(subscriptionID)
         Notifications.saveSubscriptionID(subscription)
       })
@@ -103,7 +103,7 @@ class Notifications {
       .then((subscription) => {
         console.info('Push notification unsubscribed.')
         console.log(subscription[0])
-        let subscriptionID = subscription[0].endpoint.split('gcm/send/')[1]
+        let subscriptionID = subscription[0].endpoint
         resolve(subscriptionID)
       })
       .catch((error) => {
