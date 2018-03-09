@@ -42,9 +42,10 @@ self.addEventListener('activate', (event) => {
    */
   self.addEventListener('push', (event) => {
     console.info('Event: Push')
-    let title = event.data.title || 'Event'
+    console.log(event)
+    let title = 'Event'
     let body = {
-      body: event.data.body,
+      body: 'so',
       tag: 'shiny'
     }
     event.waitUntil(
