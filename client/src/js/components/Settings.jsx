@@ -174,8 +174,8 @@ class Settings extends Component {
                   <h3>{preference.name}</h3>
                   <Toggle
                     label='Commit events'
-                    onToggle={(event, isToggled) => { this.onPrefToggle(isToggled, preference.name, 'commit') }}
-                    toggled={preference.allowed.indexOf('commit') > -1}
+                    onToggle={(event, isToggled) => { this.onPrefToggle(isToggled, preference.name, 'push') }}
+                    toggled={preference.allowed.indexOf('push') > -1}
                     labelStyle={{color: 'black'}}
                 />
                   <Toggle
