@@ -14,7 +14,7 @@ class Dash extends Component {
         {(this.props.name !== 1 && this.props.messages.length > 0) && (this.props.messages.reverse().map((event, index) => { return (<div className='event' key={index}><p className='time'>{event.time}</p><p><span className='user'>{event.user}</span> did a <span className='type'>{event.type}</span> in <span className='repo'>{event.repo}</span></p></div>) }))}
         {(this.props.name !== 1) &&
         <Websocket
-          url='ws://127.0.0.1:5050'
+          url='wss://46.101.84.10/'
           auth={Auth.getToken()}
           organization={this.props.name}
           onEvent={this.props.onEvent}
