@@ -11,7 +11,8 @@ class Settings extends Component {
     super(props)
     this.state = {
       pushPossible: false,
-      pushEnabled: false
+      pushEnabled: false,
+      preferences: []
     }
 
     this.handlePushEnable = this.handlePushEnable.bind(this)
@@ -38,9 +39,14 @@ class Settings extends Component {
     .then((result) => {
       if (result.activated) {
         this.setState({pushEnabled: true})
+        return this.getPreferences()
       } else {
         this.setState({pushEnabled: false})
+        return Promise.resolve([])
       }
+    })
+    .then((preferences) => {
+      this.setState({preferences: preferences})
     })
     .catch((error) => {
       this.setState({pushError: error.message})
@@ -48,7 +54,6 @@ class Settings extends Component {
   }
 
   handlePushEnable () {
-    console.log('clickety')
     if (this.state.pushEnabled) {
       Notifications.unsubscribePush()
       .then((subscriptionID) => {
@@ -101,22 +106,48 @@ class Settings extends Component {
     })
   }
 
+  getPreferences () {
+    return new Promise((resolve, reject) => {
+      axios({
+        url: 'http://127.0.0.1:5050/notifications/preferences/',
+        method: 'GET',
+        headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+        data: {
+          org: this.props.name
+        }
+      })
+      .then((result) => {
+        console.log(result)
+        resolve([])
+      })
+      .catch((error) => {
+        reject(error)
+      })
+    })
+  }
+
   render () {
     return (
       <div>
         <div>
-          {(this.props.name === 0) && (<h2>You are not following any organizations</h2>) }
-          {(this.props.name !== 0) && (<h2>Offline notifications for {this.props.name}</h2>)}
+          {(this.props.name === 1) && (<h2>You are not following any organizations</h2>) }
+          {(this.props.name !== 1) && (<h2>Offline notifications for {this.props.name}</h2>)}
         </div>
-        <div className='action-button-div'>
-          {(this.state.pushError) && <p>{this.state.pushError}</p>}
-          <div className='action-button'>
-            <FloatingActionButton onClick={this.handlePushEnable} disabled={!this.state.pushPossible}>
-              {(!this.state.pushEnabled) && <ActivateNotification />}
-              {(this.state.pushEnabled) && <UnActivateNotification />}
-            </FloatingActionButton>
+        {(this.props.name !== 1) &&
+        (<div>
+          <div>
+            {(this.state.preferences.length > 0) && <p>Preferences</p>}
           </div>
-        </div>
+          <div className='action-button-div'>
+            {(this.state.pushError) && <p>{this.state.pushError}</p>}
+            <div className='action-button'>
+              <FloatingActionButton onClick={this.handlePushEnable} disabled={!this.state.pushPossible}>
+                {(!this.state.pushEnabled) && <ActivateNotification />}
+                {(this.state.pushEnabled) && <UnActivateNotification />}
+              </FloatingActionButton>
+            </div>
+          </div>
+        </div>)}
       </div>
     )
   }

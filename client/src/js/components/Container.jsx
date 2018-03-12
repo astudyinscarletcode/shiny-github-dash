@@ -33,7 +33,8 @@ class Container extends Component {
       url: 'http://127.0.0.1:5050/github/organizations'
     })
     .then((response) => {
-      this.setState({menuOptions: response.data.organizations.map(org => org.login), selected: (response.data.organizations[0].login ? response.data.organizations[0].login : 0)})
+      this.setState({menuOptions: response.data.organizations.map(org => org.login), selected: (response.data.organizations[0] && response.data.organizations[0].login ? response.data.organizations[0].login : 1)},
+    () => {console.log(this.state)})
     })
     .catch((err) => {
       console.log({message: err})
