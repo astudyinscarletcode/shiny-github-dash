@@ -71,3 +71,8 @@ body {
   font-weight: bolder;
   text-align: left;
 }
+
+.toggles {
+  max-width: 15em;
+  margin: 0 auto;
+}

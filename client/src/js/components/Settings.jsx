@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import ActivateNotification from 'material-ui/svg-icons/alert/add-alert'
 import UnActivateNotification from 'material-ui/svg-icons/navigation/cancel'
+import RaisedButton from 'material-ui/RaisedButton'
+import Toggle from 'material-ui/Toggle'
 import Notifications from './../modules/notifications'
 import Auth from '../modules/auth'
 import axios from 'axios'
@@ -16,6 +18,8 @@ class Settings extends Component {
     }
 
     this.handlePushEnable = this.handlePushEnable.bind(this)
+    this.onPrefToggle = this.onPrefToggle.bind(this)
+    this.savePreferences = this.savePreferences.bind(this)
   }
 
   componentWillMount () {
@@ -84,7 +88,6 @@ class Settings extends Component {
   }
 
   addSubscriptionID (subscription) {
-    console.log(subscription)
     axios({
       url: 'http://127.0.0.1:5050/notifications/subscriptions/',
       method: 'PUT',
@@ -106,19 +109,48 @@ class Settings extends Component {
     })
   }
 
+  savePreferences () {
+    axios({
+      url: 'http://127.0.0.1:5050/notifications/preferences/' + this.props.name,
+      method: 'PUT',
+      headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      data: {
+        preferences: this.state.preferences
+      }
+    })
+  }
+
+  onPrefToggle (isToggled, repo, eventType) {
+    let preferences = this.state.preferences.find((prefs) => {
+      return prefs.name === repo
+    })
+
+    let newPreferences = {name: repo, allowed: []}
+
+    if (isToggled) {
+      newPreferences.allowed = preferences.allowed.indexOf(eventType) === -1 ? newPreferences.allowed.concat(preferences.allowed, [eventType]) : preferences.allowed
+    } else {
+      newPreferences.allowed = preferences.allowed.indexOf(eventType) !== -1 ? preferences.allowed : preferences.allowed.filter((type) => { return type !== eventType })
+    }
+
+    this.setState({preferences: this.state.preferences.filter((pref) => {
+      return pref.name !== repo
+    })}, () => {
+      this.setState(prevState => ({
+        preferences: [...prevState.preferences, newPreferences]
+      }))
+    })
+  }
+
   getPreferences () {
     return new Promise((resolve, reject) => {
       axios({
-        url: 'http://127.0.0.1:5050/notifications/preferences/',
+        url: 'http://127.0.0.1:5050/notifications/preferences/' + this.props.name,
         method: 'GET',
-        headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-        data: {
-          org: this.props.name
-        }
+        headers: {'Authorization': 'Bearer ' + Auth.getToken()}
       })
       .then((result) => {
-        console.log(result)
-        resolve([])
+        resolve(result.data.preferences)
       })
       .catch((error) => {
         reject(error)
@@ -136,11 +168,37 @@ class Settings extends Component {
         {(this.props.name !== 1) &&
         (<div>
           <div>
-            {(this.state.preferences.length > 0) && <p>Preferences</p>}
+            {(this.state.preferences.length > 0) && (this.state.preferences.map((preference, index) => {
+              return (
+                <div className='toggles' key={index}>
+                  <h3>{preference.name}</h3>
+                  <Toggle
+                    label='Commit events'
+                    onToggle={(event, isToggled) => { this.onPrefToggle(isToggled, preference.name, 'commit') }}
+                    toggled={preference.allowed.indexOf('commit') > -1}
+                    labelStyle={{color: 'black'}}
+                />
+                  <Toggle
+                    label='Repository events'
+                    onToggle={(event, isToggled) => { this.onPrefToggle(isToggled, preference.name, 'repo') }}
+                    toggled={preference.allowed.indexOf('repo') > -1}
+                    labelStyle={{color: 'black'}}
+                />
+                  <Toggle
+                    label='Release events'
+                    onToggle={(event, isToggled) => { this.onPrefToggle(isToggled, preference.name, 'release') }}
+                    toggled={preference.allowed.indexOf('release') > -1}
+                    labelStyle={{color: 'black'}}
+                />
+                </div>
+              )
+            }))}
+            <RaisedButton label='Save notification preferences' onClick={this.savePreferences} />
           </div>
           <div className='action-button-div'>
             {(this.state.pushError) && <p>{this.state.pushError}</p>}
             <div className='action-button'>
+              <p>Activate offline notifications:</p>
               <FloatingActionButton onClick={this.handlePushEnable} disabled={!this.state.pushPossible}>
                 {(!this.state.pushEnabled) && <ActivateNotification />}
                 {(this.state.pushEnabled) && <UnActivateNotification />}
