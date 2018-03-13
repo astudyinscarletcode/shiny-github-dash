@@ -104,6 +104,7 @@ self.addEventListener('fetch', (event) => {
                 resolve(response)
               })
               .catch((err) => {
+                console.log(err)
                 reject(err)
               })
     })
