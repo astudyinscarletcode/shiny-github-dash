@@ -4,7 +4,7 @@
  */
 
 // Keep track of the cache.
-let CACHE_VERSION = '1'
+let CACHE_VERSION = '2'
 let STATIC_CACHE = 'static'
 
 let expectedCaches = [CACHE_VERSION, STATIC_CACHE]
@@ -58,7 +58,7 @@ self.addEventListener('fetch', (event) => {
     console.log(request)
 
     event.respondWith(
-          fromNetwork(event.request, 1000)
+          fromNetwork(event.request, 5000)
               .then((response) => {
                 if (response.type === 'opaqueredirect') {
                       // Do not cache redirects, follow them.
