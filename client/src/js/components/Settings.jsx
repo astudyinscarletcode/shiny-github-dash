@@ -44,11 +44,11 @@ class Settings extends Component {
     .then((result) => {
       if (result.activated) {
         this.setState({pushEnabled: true})
-        return this.getPreferences()
       } else {
         this.setState({pushEnabled: false})
-        return Promise.resolve([])
       }
+
+      return this.getPreferences()
     })
     .then((preferences) => {
       this.setState({preferences: preferences})
@@ -93,9 +93,6 @@ class Settings extends Component {
       url: 'https://gh-dash-api.herokuapp.com/notifications/subscriptions/',
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false
-      }),
       data: {
         subscription: subscription
       }
@@ -107,9 +104,6 @@ class Settings extends Component {
       url: 'https://gh-dash-api.herokuapp.com/notifications/subscriptions/',
       method: 'DELETE',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false
-      }),
       data: {
         subscription: subscription
       }
@@ -121,9 +115,6 @@ class Settings extends Component {
       url: 'https://gh-dash-api.herokuapp.com/notifications/preferences/' + this.props.name,
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-      httpsAgent: new https.Agent({
-        rejectUnauthorized: false
-      }),
       data: {
         preferences: this.state.preferences
       }
@@ -135,6 +126,10 @@ class Settings extends Component {
       return prefs.name === repo
     })
 
+    let index = this.state.preferences.findIndex((prefs) => {
+      return prefs.name === repo
+    })
+
     let newPreferences = {name: repo, allowed: []}
 
     if (isToggled) {
@@ -143,13 +138,8 @@ class Settings extends Component {
       newPreferences.allowed = preferences.allowed.indexOf(eventType) === -1 ? preferences.allowed : preferences.allowed.filter((type) => { return type !== eventType })
     }
 
-    this.setState({preferences: this.state.preferences.filter((pref) => {
-      return pref.name !== repo
-    })}, () => {
-      this.setState(prevState => ({
-        preferences: [...prevState.preferences, newPreferences]
-      }))
-    })
+    this.state.preferences[index] = newPreferences
+    this.forceUpdate()
   }
 
   getPreferences () {
