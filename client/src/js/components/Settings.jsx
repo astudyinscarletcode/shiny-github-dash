@@ -7,6 +7,7 @@ import Toggle from 'material-ui/Toggle'
 import Notifications from './../modules/notifications'
 import Auth from '../modules/auth'
 import axios from 'axios'
+import https from 'https'
 
 class Settings extends Component {
   constructor (props) {
@@ -92,6 +93,9 @@ class Settings extends Component {
       url: 'https://188.166.170.11/notifications/subscriptions/',
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       data: {
         subscription: subscription
       }
@@ -103,6 +107,9 @@ class Settings extends Component {
       url: 'https://188.166.170.11/notifications/subscriptions/',
       method: 'DELETE',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       data: {
         subscription: subscription
       }
@@ -114,6 +121,9 @@ class Settings extends Component {
       url: 'https://188.166.170.11/notifications/preferences/' + this.props.name,
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       data: {
         preferences: this.state.preferences
       }
@@ -150,7 +160,10 @@ class Settings extends Component {
       axios({
         url: 'https://188.166.170.11/notifications/preferences/' + this.props.name,
         method: 'GET',
-        headers: {'Authorization': 'Bearer ' + Auth.getToken()}
+        headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+        httpsAgent: new https.Agent({
+          rejectUnauthorized: false
+        })
       })
       .then((result) => {
         resolve(result.data.preferences)

@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem'
 import RaisedButton from 'material-ui/RaisedButton'
 import CircularProgress from 'material-ui/CircularProgress'
 import axios from 'axios'
+import https from 'https'
 
 import Dash from './Dash.jsx'
 import Settings from './Settings.jsx'
@@ -30,6 +31,9 @@ class Container extends Component {
     axios({
       method: 'get',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       url: 'https://188.166.170.11/github/organizations'
     })
     .then((response) => {
