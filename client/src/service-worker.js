@@ -104,14 +104,14 @@ self.addEventListener('fetch', (event) => {
   // Do not intervene with github, socket, or anything that isn't a GET request.
   function isCacheable (request) {
     let parsedURL = new URL(request.url)
-    console.log(parsedURL)
 
-    let isSSL = parsedURL.includes('')
+    let isSSL = parsedURL.protocol.includes('https')
+    let isSelf = parsedURL.origin.includes('shiny')
     let isGithub = parsedURL.origin.includes('github')
     let isLogin = parsedURL.pathname.includes('login')
     let isSocket = parsedURL.pathname.includes('socket.io')
     let isGET = request.method === 'GET'
 
-    return ((!(isGithub || isSocket || isLogin)) && isGET)
+    return ((!(isGithub || isSocket || isLogin || (isSSL && !isSelf)) && isGET))
   }
 })
