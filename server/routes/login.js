@@ -24,7 +24,7 @@ router.route('/login/return')
           return next(err)
         } else {
           axios({
-            url: ('https://188.166.170.11/github/authorize'),
+            url: ('/api/github/authorize'),
             method: 'POST',
             httpsAgent: new https.Agent({
               rejectUnauthorized: false
