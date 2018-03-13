@@ -8,6 +8,7 @@ let CACHE_VERSION = '2'
 let STATIC_CACHE = 'static'
 
 let expectedCaches = [CACHE_VERSION, STATIC_CACHE]
+let axios = require('axios')
 
 self.addEventListener('install', (event) => {
     // Store some files on first load.
@@ -68,7 +69,7 @@ self.addEventListener('fetch', (event) => {
                 return addToCache(CACHE_VERSION, request, response)
               })
               .catch(() => fetchFromCache(event))
-              .catch(() => fetch(request)))
+              .catch(() => axios(request)))
   }
 
   // Add responses to cache to fetch later.
@@ -99,7 +100,7 @@ self.addEventListener('fetch', (event) => {
     return new Promise((resolve, reject) => {
       let timeoutId = setTimeout(reject, timeout)
 
-      fetch(request)
+      axios(request)
               .then((response) => {
                 clearTimeout(timeoutId)
                 resolve(response)

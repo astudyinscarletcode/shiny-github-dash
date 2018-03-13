@@ -31,6 +31,9 @@ class Container extends Component {
     axios({
       method: 'get',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false
+      }),
       url: 'https://188.166.170.11/github/organizations'
     })
     .then((response) => {
