@@ -3,13 +3,13 @@
  * site for offline use.
  */
 
-import axios from 'axios'
-
 // Keep track of the cache.
 let CACHE_VERSION = '2'
 let STATIC_CACHE = 'static'
 
 let expectedCaches = [CACHE_VERSION, STATIC_CACHE]
+
+self.importScripts('axios')
 
 self.addEventListener('install', (event) => {
     // Store some files on first load.
