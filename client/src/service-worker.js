@@ -4,12 +4,10 @@
  */
 
 // Keep track of the cache.
-let CACHE_VERSION = '2'
+let CACHE_VERSION = '3'
 let STATIC_CACHE = 'static'
 
 let expectedCaches = [CACHE_VERSION, STATIC_CACHE]
-
-self.importScripts('axios')
 
 self.addEventListener('install', (event) => {
     // Store some files on first load.
@@ -57,7 +55,6 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   function onFetch (event) {
     let request = event.request
-    console.log(request)
 
     event.respondWith(
           fromNetwork(event.request, 5000)
@@ -66,23 +63,9 @@ self.addEventListener('fetch', (event) => {
                       // Do not cache redirects, follow them.
                   return Promise.reject(event)
                 }
-
-                return addToCache(CACHE_VERSION, request, response)
               })
               .catch(() => fetchFromCache(event))
-              .catch(() => axios(request)))
-  }
-
-  // Add responses to cache to fetch later.
-  function addToCache (cacheKey, request, response) {
-    if (response.ok) {
-      let copy = response.clone() // Copy the response as to not use it up.
-      caches.open(cacheKey).then((cache) => {
-        cache.put(request, copy)
-      })
-
-      return response
-    }
+              .catch(() => fetch(request)))
   }
 
   // Get responses from cache.
@@ -101,7 +84,7 @@ self.addEventListener('fetch', (event) => {
     return new Promise((resolve, reject) => {
       let timeoutId = setTimeout(reject, timeout)
 
-      axios(request)
+      fetch(request)
               .then((response) => {
                 clearTimeout(timeoutId)
                 resolve(response)
