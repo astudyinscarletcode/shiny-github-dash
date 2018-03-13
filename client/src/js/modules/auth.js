@@ -27,7 +27,6 @@ class Auth {
      * Remove the current users cookie session.
      */
   static deauthenticateUser () {
-    console.log('deauth')
     Cookies.remove('currentUser')
 
     return true

@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "webpack",
-    "start": "npm install --only=dev && webpack && node server/server.js"
+    "start": "npm install --only=dev && webpack && node server/server.js && node server/services/api-gateway/gateway-server.js && node server/services/github/github-server.js && node server/services/notification/notification-service.js"
   },
   "main": "index.js",
   "author": "Molly Arhammar",

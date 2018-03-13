@@ -90,7 +90,7 @@ class Settings extends Component {
 
   addSubscriptionID (subscription) {
     axios({
-      url: '/api/notifications/subscriptions/',
+      url: 'https://gh-dash-api.herokuapp.com/notifications/subscriptions/',
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       httpsAgent: new https.Agent({
@@ -104,7 +104,7 @@ class Settings extends Component {
 
   removeSubscriptionID (subscription) {
     axios({
-      url: '/api/notifications/subscriptions/',
+      url: 'https://gh-dash-api.herokuapp.com/notifications/subscriptions/',
       method: 'DELETE',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       httpsAgent: new https.Agent({
@@ -118,7 +118,7 @@ class Settings extends Component {
 
   savePreferences () {
     axios({
-      url: '/api/notifications/preferences/' + this.props.name,
+      url: 'https://gh-dash-api.herokuapp.com/notifications/preferences/' + this.props.name,
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       httpsAgent: new https.Agent({
@@ -136,15 +136,12 @@ class Settings extends Component {
     })
 
     let newPreferences = {name: repo, allowed: []}
-    console.log(isToggled)
 
     if (isToggled) {
       newPreferences.allowed = preferences.allowed.indexOf(eventType) === -1 ? newPreferences.allowed.concat(preferences.allowed, [eventType]) : preferences.allowed
     } else {
       newPreferences.allowed = preferences.allowed.indexOf(eventType) === -1 ? preferences.allowed : preferences.allowed.filter((type) => { return type !== eventType })
     }
-
-    console.log(newPreferences)
 
     this.setState({preferences: this.state.preferences.filter((pref) => {
       return pref.name !== repo
@@ -158,7 +155,7 @@ class Settings extends Component {
   getPreferences () {
     return new Promise((resolve, reject) => {
       axios({
-        url: '/api/notifications/preferences/' + this.props.name,
+        url: 'https://gh-dash-api.herokuapp.com/notifications/preferences/' + this.props.name,
         method: 'GET',
         headers: {'Authorization': 'Bearer ' + Auth.getToken()},
         httpsAgent: new https.Agent({
@@ -184,7 +181,7 @@ class Settings extends Component {
         {(this.props.name !== 1) &&
         (<div>
           <div>
-          {(this.state.preferences.length === 0) && (<p>No repositories found in this organization.</p>)}
+            {(this.state.preferences.length === 0) && (<p>No repositories found in this organization.</p>)}
             {(this.state.preferences.length > 0) && (this.state.preferences.map((preference, index) => {
               return (
                 <div className='toggles' key={index}>

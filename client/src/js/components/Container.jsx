@@ -34,7 +34,7 @@ class Container extends Component {
       httpsAgent: new https.Agent({
         rejectUnauthorized: false
       }),
-      url: '/api/github/organizations'
+      url: 'https://gh-dash-api.herokuapp.com/github/organizations'
     })
     .then((response) => {
       this.setState({menuOptions: response.data.organizations.map(org => org.login), selected: (response.data.organizations[0] && response.data.organizations[0].login ? response.data.organizations[0].login : 1)})
