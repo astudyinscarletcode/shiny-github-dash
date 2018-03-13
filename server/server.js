@@ -15,8 +15,6 @@ let port = process.env.PORT || 5151
 let cwd = __dirname || process.cwd()
 let staticPath = path.join(cwd, '../client/build')
 
-console.log(path.resolve(cwd + '/.env'))
-
 require('dotenv').config({path: path.resolve(cwd + '/.env')})
 require('./lib/auth/passport-setup').connect()
 
