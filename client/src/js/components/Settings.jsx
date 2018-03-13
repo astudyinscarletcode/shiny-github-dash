@@ -89,7 +89,7 @@ class Settings extends Component {
 
   addSubscriptionID (subscription) {
     axios({
-      url: 'https://46.101.84.10/notifications/subscriptions/',
+      url: 'https://188.166.170.11/notifications/subscriptions/',
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       data: {
@@ -100,7 +100,7 @@ class Settings extends Component {
 
   removeSubscriptionID (subscription) {
     axios({
-      url: 'https://46.101.84.10/notifications/subscriptions/',
+      url: 'https://188.166.170.11/notifications/subscriptions/',
       method: 'DELETE',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       data: {
@@ -111,7 +111,7 @@ class Settings extends Component {
 
   savePreferences () {
     axios({
-      url: 'https://46.101.84.10/notifications/preferences/' + this.props.name,
+      url: 'https://188.166.170.11/notifications/preferences/' + this.props.name,
       method: 'PUT',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
       data: {
@@ -148,7 +148,7 @@ class Settings extends Component {
   getPreferences () {
     return new Promise((resolve, reject) => {
       axios({
-        url: 'https://46.101.84.10/notifications/preferences/' + this.props.name,
+        url: 'https://188.166.170.11/notifications/preferences/' + this.props.name,
         method: 'GET',
         headers: {'Authorization': 'Bearer ' + Auth.getToken()}
       })

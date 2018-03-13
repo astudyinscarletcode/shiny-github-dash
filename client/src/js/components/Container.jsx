@@ -30,7 +30,7 @@ class Container extends Component {
     axios({
       method: 'get',
       headers: {'Authorization': 'Bearer ' + Auth.getToken()},
-      url: 'https://46.101.84.10/github/organizations'
+      url: 'https://188.166.170.11/github/organizations'
     })
     .then((response) => {
       this.setState({menuOptions: response.data.organizations.map(org => org.login), selected: (response.data.organizations[0] && response.data.organizations[0].login ? response.data.organizations[0].login : 1)})
