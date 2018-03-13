@@ -23,7 +23,7 @@ router.route('/login/return')
           return next(err)
         } else {
           axios({
-            url: (process.env.GITHUB_APP_GATEWAY_URL + '/github/authorize'),
+            url: ('https://188.166.170.11/github/authorize'),
             method: 'POST',
             data: {user: user.username, accessToken: user.accessToken}
           })
