@@ -55,6 +55,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   function onFetch (event) {
     let request = event.request
+    console.log(request)
 
     event.respondWith(
           fromNetwork(event.request, 1000)
